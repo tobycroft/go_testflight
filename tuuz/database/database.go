@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/Unknwon/goconfig"
 	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/sijms/go-ora/v2"
 	"github.com/tobycroft/gorose-pro"
 	"log"
 	"main.go/config/app_conf"
@@ -69,7 +70,7 @@ func _conn() {
 
 func DbConfig() *gorose.Config {
 	var conf gorose.Config
-	conf.Driver = "mysql"
+	conf.Driver = "oracle"
 	conf.SetMaxIdleConns = 20
 	conf.SetMaxOpenConns = 300
 	conf.Prefix = ""
