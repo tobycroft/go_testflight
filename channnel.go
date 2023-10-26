@@ -2,17 +2,16 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 var ChanFlight = make(chan any, 100)
 
-func main() {
-	go readout()
-	writein()
-	time.Sleep(100 * time.Millisecond)
-
-}
+//func main() {
+//	go readout()
+//	writein()
+//	time.Sleep(100 * time.Millisecond)
+//
+//}
 
 func readout() {
 	for c := range ChanFlight {
