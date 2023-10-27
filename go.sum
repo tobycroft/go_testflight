@@ -81,6 +81,8 @@ github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeN
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/google/uuid v1.3.1 h1:KjJaJ9iWZ3jOFZIf1Lqf4laDRCasjl0BCmnEGxkdLb4=
 github.com/google/uuid v1.3.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/google/uuid v1.4.0 h1:MtMxsa51/r9yyhkyLsVeVt0B+BGQZzpQiTQ4eHZ8bc4=
+github.com/google/uuid v1.4.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gopherjs/gopherjs v1.17.2 h1:fQnZVsXk8uxXIStYb0N4bGk7jeyTalG/wsZjQ25dO0g=
 github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
 github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
@@ -145,6 +147,8 @@ github.com/tobycroft/HttpRequest v1.1.5 h1:NUAjTVSoanjVNny1GVaYKaxfJJd26fIY4dj3R
 github.com/tobycroft/HttpRequest v1.1.5/go.mod h1:WYJFLv/vPAQ7yIjkAbSnfq/ikuIrDr8wmSDXGDN34q0=
 github.com/tobycroft/gorose-pro v1.12.2 h1:1VKO05SQ/X0YHD3DNKleZqf/7uWZXZcTfo0s5myuXqQ=
 github.com/tobycroft/gorose-pro v1.12.2/go.mod h1:dgkEvC/YbvQKdrwCDac5Xy/OllbuERFz5Q1+QNRs3lQ=
+github.com/tobycroft/gorose-pro v1.12.3 h1:Vi9ccwcWNnh2knIKCAW6ioSCqw3Upx6ta0pTkXP40Zc=
+github.com/tobycroft/gorose-pro v1.12.3/go.mod h1:dgkEvC/YbvQKdrwCDac5Xy/OllbuERFz5Q1+QNRs3lQ=
 github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS4MhqMhdFk5YI=
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.2.11 h1:BMaWp1Bb6fHwEtbplGBGJ498wD+LKlNSl25MjdZY4dU=

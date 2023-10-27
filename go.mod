@@ -16,7 +16,7 @@ require (
 	github.com/sijms/go-ora/v2 v2.7.19
 	github.com/tobycroft/Calc v1.2.3
 	github.com/tobycroft/HttpRequest v1.1.5
-	github.com/tobycroft/gorose-pro v1.12.2
+	github.com/tobycroft/gorose-pro v1.12.3
 
 )
 
@@ -38,7 +38,7 @@ require (
 	github.com/gohouse/t v0.0.0-20201007094014-630049a6bfe9 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/google/uuid v1.3.1 // indirect
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
