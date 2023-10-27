@@ -3,6 +3,8 @@ package database
 import (
 	"fmt"
 	"github.com/Unknwon/goconfig"
+	go_ora "github.com/sijms/go-ora/v2"
+
 	//_ "github.com/go-sql-driver/mysql"
 	_ "github.com/sijms/go-ora/v2"
 	"github.com/tobycroft/gorose-pro"
@@ -74,7 +76,7 @@ func DbConfig() *gorose.Config {
 	conf.SetMaxIdleConns = 20
 	conf.SetMaxOpenConns = 300
 	conf.Prefix = ""
-	conf.Dsn = dsn_local()
+	conf.Dsn = go_ora.BuildUrl("172.0.0.2", 1521, "XE", "C##TEST", "123456", map[string]string{})
 	return &conf
 }
 
