@@ -9,12 +9,13 @@ func main() {
 	tuuz.Db()
 	db := tuuz.Db().Table("aaa")
 	db.Fields()
-	db.Where("id")
-	//db.Where("val")
+	//db.Where("id")
+	db.Where("NUMBER")
 	db.Data(map[string]any{
-		"id":   "2",
-		"val":  "ggg",
-		"val2": "sss",
+		"id":     5,
+		"val":    "ggg",
+		"val2":   "sss",
+		"NUMBER": 5,
 	})
 	//fmt.Println(db.BuildSql("replace"))
 	fmt.Println(db.Replace())
