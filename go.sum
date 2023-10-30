@@ -149,6 +149,12 @@ github.com/tobycroft/gorose-pro v1.12.2 h1:1VKO05SQ/X0YHD3DNKleZqf/7uWZXZcTfo0s5
 github.com/tobycroft/gorose-pro v1.12.2/go.mod h1:dgkEvC/YbvQKdrwCDac5Xy/OllbuERFz5Q1+QNRs3lQ=
 github.com/tobycroft/gorose-pro v1.12.3 h1:Vi9ccwcWNnh2knIKCAW6ioSCqw3Upx6ta0pTkXP40Zc=
 github.com/tobycroft/gorose-pro v1.12.3/go.mod h1:dgkEvC/YbvQKdrwCDac5Xy/OllbuERFz5Q1+QNRs3lQ=
+github.com/tobycroft/gorose-pro v1.12.4 h1:kMN8FfoEWJbb7BjFqkBxQLI2N+pEWIwRi1o+8YlnPCk=
+github.com/tobycroft/gorose-pro v1.12.4/go.mod h1:dgkEvC/YbvQKdrwCDac5Xy/OllbuERFz5Q1+QNRs3lQ=
+github.com/tobycroft/gorose-pro v1.12.5 h1:LYIGHJnbNC4KO4eDjAUN6cHp51vvd40S6n5J7c9U3Pc=
+github.com/tobycroft/gorose-pro v1.12.5/go.mod h1:dgkEvC/YbvQKdrwCDac5Xy/OllbuERFz5Q1+QNRs3lQ=
+github.com/tobycroft/gorose-pro v1.12.6 h1:9AfGSxsCfVfDiMu82bA60pC3GmpYjvkwDdRjpB795hc=
+github.com/tobycroft/gorose-pro v1.12.6/go.mod h1:dgkEvC/YbvQKdrwCDac5Xy/OllbuERFz5Q1+QNRs3lQ=
 github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS4MhqMhdFk5YI=
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.2.11 h1:BMaWp1Bb6fHwEtbplGBGJ498wD+LKlNSl25MjdZY4dU=
