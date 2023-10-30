@@ -10,7 +10,8 @@ func main() {
 	db := tuuz.Db().Table("aaa")
 	db.Fields()
 	//db.Where("id")
-	db.Where("NUMBER")
+	db.Where("\"NUMBER\"")
+	//db.Where("NUMBER")
 	db.Data(map[string]any{
 		"id":     5,
 		"val":    "ggg",
