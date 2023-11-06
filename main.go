@@ -8,18 +8,19 @@ import (
 func main() {
 	tuuz.Db()
 	db := tuuz.Db().Table("aaa")
-	db.Fields()
+	//db.Fields()
 	//db.Where("id")
 	//db.Where("\"NUMBER\"")
 	//db.Where("NUMBER")
-	db.Data(map[string]any{
-		"id":     5,
-		"val":    "ggg",
-		"val2":   "sss",
-		"NUMBER": 7,
-	})
+	//db.Data(map[string]any{
+	//	"id":     5,
+	//	"val":    "ggg",
+	//	"val2":   "sss",
+	//	"NUMBER": 7,
+	//})
 	//fmt.Println(db.BuildSql("replace"))
-	fmt.Println(db.Replace())
+	db.Where("val", "ggg")
+	fmt.Println(db.Get())
 	//db.Query()
 	//fmt.Println(db.Get())
 }
