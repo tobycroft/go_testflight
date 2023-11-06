@@ -16,7 +16,7 @@ require (
 	github.com/sijms/go-ora/v2 v2.7.19
 	github.com/tobycroft/Calc v1.2.3
 	github.com/tobycroft/HttpRequest v1.1.5
-	github.com/tobycroft/gorose-pro v1.12.10
+	github.com/tobycroft/gorose-pro v1.12.11
 
 )
 
