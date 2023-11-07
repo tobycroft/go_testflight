@@ -1,14 +1,36 @@
 package main
 
 import (
-	"github.com/tobycroft/Calc"
+	"errors"
+	"fmt"
+	"main.go/tuuz/Calc"
 	"testing"
 )
+
+func Benchmark_errors(b *testing.B) {
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		errors.New("1234567890123456789012345678901234567890123456789012345678901234").Error()
+
+		//Calc.Any2String(float64(12345678901234567890123456789012345678901234567890123456789012345678901234567890))
+	}
+	b.StopTimer()
+}
 
 func Benchmark_any2String(b *testing.B) {
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		Calc.Any2String(1234567890)
+		Calc.Any2String("1234567890123456789012345678901234567890123456789012345678901234")
+		//Calc.Any2String(float64(12345678901234567890123456789012345678901234567890123456789012345678901234567890))
+	}
+	b.StopTimer()
+}
+
+func Benchmark_sprintF(b *testing.B) {
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		fmt.Sprintln("1234567890123456789012345678901234567890123456789012345678901234")
+		//fmt.Sprintln(float64(12345678901234567890123456789012345678901234567890123456789012345678901234567890))
 	}
 	b.StopTimer()
 }
