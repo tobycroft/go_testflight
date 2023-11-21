@@ -20,6 +20,9 @@ func main() {
 	//})
 	//fmt.Println(db.BuildSql("replace"))
 	db.Where("val", "ggg")
+	db.Data(map[string]any{
+		"val": nil,
+	})
 	//db.OrderBy("val desc, val2 desc")
 	//db.Limit(1)
 	//fmt.Println(db.Get())
