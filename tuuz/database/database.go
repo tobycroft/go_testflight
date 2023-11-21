@@ -76,7 +76,7 @@ func DbConfig() *gorose.Config {
 	conf.SetMaxIdleConns = 20
 	conf.SetMaxOpenConns = 300
 	conf.Prefix = ""
-	conf.Dsn = go_ora.BuildUrl("172.0.0.2", 1521, "XE", "C##TEST", "123456", map[string]string{})
+	conf.Dsn = go_ora.BuildUrl("10.0.0.172", 1521, "XE", "C##TEST", "qwerty123", map[string]string{})
 	return &conf
 }
 
