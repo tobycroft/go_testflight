@@ -21,7 +21,7 @@ func main() {
 	//fmt.Println(db.BuildSql("replace"))
 	db.Where("val", "111")
 	db.Data(map[string]any{
-		"\"val2\"": "",
+		"val2": nil,
 	})
 	//db.OrderBy("val desc, val2 desc")
 	//db.Limit(1)
