@@ -16,19 +16,19 @@ type SimVar struct {
 }
 
 type SimObjectValue struct {
-	simconnect.RecvSimObjectDataByType
-	Value float64
+	simconnect.RecvSimObjectDataByType ``
+	Value                              float64
 }
 
 var (
-	requestDataInterval = time.Millisecond * 250
+	requestDataInterval = time.Millisecond * 1000
 	receiveDataInterval = time.Millisecond * 1
 	simConnect          *simconnect.SimConnect
 	simVars             []*SimVar
 )
 
 func main() {
-	additionalSearchPath := ""
+	additionalSearchPath := "D:\\Games\\MSFS\\Microsoft Flight Simulator\\Content"
 	args := os.Args
 	if len(args) > 1 {
 		additionalSearchPath = args[1]
@@ -45,7 +45,20 @@ func main() {
 	}
 
 	simVars = make([]*SimVar, 0)
-	nameUnitMapping := map[string]string{"AIRSPEED INDICATED": "knot", "INDICATED ALTITUDE": "feet", "PLANE LATITUDE": "degrees", "PLANE LONGITUDE": "degrees"}
+	nameUnitMapping := map[string]string{
+		"AIRSPEED INDICATED":      "knot",
+		"INDICATED ALTITUDE":      "feet",
+		"PLANE LATITUDE":          "degrees",
+		"PLANE LONGITUDE":         "degrees",
+		"FUEL LEFT CAPACITY":      "Gallons",
+		"AILERON LEFT DEFLECTION": "Radians",
+		//"CRASH FLAG":              "",
+		//"CATEGORY":                "",
+		"PLANE TOUCHDOWN NORMAL VELOCITY": "",
+		"VERTICAL SPEED":                  "",
+		"CRASH SEQUENCE":                  "",
+		"PLANE BANK DEGREES":              "",
+	}
 	for name, unit := range nameUnitMapping {
 		defineID := simconnect.NewDefineID()
 		simConnect.AddToDataDefinition(defineID, name, unit, simconnect.DataTypeFloat64)
@@ -91,7 +104,7 @@ func HandleEvents(done chan bool) {
 	for {
 		select {
 		case <-reqDataTicker.C:
-			fmt.Println("\nRequesting data...")
+			fmt.Print("\nRequesting data...")
 			for _, simVar := range simVars {
 				simConnect.RequestDataOnSimObjectType(simconnect.NewRequestID(), simVar.DefineID, radius, simObjectType)
 			}
@@ -109,6 +122,7 @@ func HandleEvents(done chan bool) {
 			}
 
 			recv := *(*simconnect.Recv)(ppData)
+			fmt.Println("recvid", recv.ID)
 			switch recv.ID {
 			case simconnect.RecvIDOpen:
 				fmt.Println("Connected.")
@@ -126,9 +140,21 @@ func HandleEvents(done chan bool) {
 				for _, simVar := range simVars {
 					if simVar.DefineID == data.DefineID {
 						fmt.Printf("[%d] %s %s %f\n", data.RequestID, simVar.Name, simVar.Unit, data.Value)
+						//time.Sleep(1 * time.Second)
 						break
 					}
 				}
+
+			case simconnect.RecvIDAirportList:
+				data := *(*SimObjectValue)(ppData)
+				for _, simVar := range simVars {
+					if simVar.DefineID == data.DefineID {
+						fmt.Printf("[%d] %s %s %f\n", data.RequestID, simVar.Name, simVar.Unit, data.Value)
+						time.Sleep(1 * time.Second)
+						break
+					}
+				}
+
 			}
 		}
 	}
