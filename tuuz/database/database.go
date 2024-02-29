@@ -3,10 +3,7 @@ package database
 import (
 	"fmt"
 	"github.com/Unknwon/goconfig"
-	go_ora "github.com/sijms/go-ora/v2"
-
-	//_ "github.com/go-sql-driver/mysql"
-	_ "github.com/sijms/go-ora/v2"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/tobycroft/gorose-pro"
 	"log"
 	"main.go/config/app_conf"
@@ -72,11 +69,11 @@ func _conn() {
 
 func DbConfig() *gorose.Config {
 	var conf gorose.Config
-	conf.Driver = "oracle"
+	conf.Driver = "mysql"
 	conf.SetMaxIdleConns = 20
 	conf.SetMaxOpenConns = 300
 	conf.Prefix = ""
-	conf.Dsn = go_ora.BuildUrl("10.0.0.172", 1521, "XE", "C##TEST", "qwerty123", map[string]string{})
+	conf.Dsn = dsn_local()
 	return &conf
 }
 
@@ -88,7 +85,9 @@ func dsn_local() string {
 	}
 	conntype := "tcp"
 	charset := "utf8mb4"
-	return dbuser + ":" + dbpass + "@" + conntype + "(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=" + charset + "&parseTime=true&loc=" + url.QueryEscape(app_conf.TimeZoneLocation)
+	//使用时区时间并处理成(time.Time)，如非必要，建议不要关闭
+	parseTime := "true"
+	return dbuser + ":" + dbpass + "@" + conntype + "(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=" + charset + "&parseTime=" + parseTime + "&loc=" + url.QueryEscape(app_conf.TimeZoneLocation)
 }
 
 var need string

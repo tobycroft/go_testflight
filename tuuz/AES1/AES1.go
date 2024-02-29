@@ -6,7 +6,7 @@ import (
 	"crypto/cipher"
 )
 
-// 解密
+//解密
 func AESDecrypt(crypted, key []byte) []byte {
 	block, _ := aes.NewCipher(key)
 	blockSize := block.BlockSize()
@@ -17,14 +17,14 @@ func AESDecrypt(crypted, key []byte) []byte {
 	return origData
 }
 
-// 去补码
+//去补码
 func PKCS7UnPadding(origData []byte) []byte {
 	length := len(origData)
 	unpadding := int(origData[length-1])
 	return origData[:length-unpadding]
 }
 
-// 加密
+//加密
 func AESEncrypt(origData, key []byte) []byte {
 	//获取block块
 	block, _ := aes.NewCipher(key)
@@ -42,7 +42,7 @@ func AESEncrypt(origData, key []byte) []byte {
 	return crypted
 }
 
-// 补码
+//补码
 func PKCS7Padding(origData []byte, blockSize int) []byte {
 	//计算需要补几位数
 	padding := blockSize - len(origData)%blockSize

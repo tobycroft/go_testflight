@@ -35,7 +35,7 @@ func Rand[T int | int64](min, max T) T {
 func Any2Int64(any interface{}) int64 {
 	ret, err := Any2Int64_2(any)
 	if err != nil {
-		return 0
+		return -99999998
 	}
 	return ret
 }
@@ -58,7 +58,7 @@ func Any2Float64_2(any interface{}) (float64, error) {
 func Any2Int(any interface{}) int {
 	ret, err := Any2Int_2(any)
 	if err != nil {
-		return 0
+		return -99999998
 	}
 	return ret
 }

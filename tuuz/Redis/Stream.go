@@ -6,26 +6,64 @@ import (
 	"main.go/config/app_conf"
 )
 
-func Stream_publish(stream_channel string, value any) error {
-	var xa redis.XAddArgs
-	xa.Stream = app_conf.Project + ":" + stream_channel
-	xa.Values = value
-	return goredis.XAdd(context.Background(), &xa).Err()
+type Stream struct {
+	StreamChannelName string
+	//Producer          chan any
+	//Consumer          chan any
+	Group    string
+	Consumer string
 }
 
-func Stream_xLength(stream_channel string) (int64, error) {
-	return goredis.XLen(context.Background(), app_conf.Project+":"+stream_channel).Result()
+type stream struct {
+	Stream
 }
 
-func Stream_xRange(stream_key string) ([]redis.XMessage, error) {
-	return goredis.XRange(context.Background(), app_conf.Project+":"+stream_key, "-", "+").Result()
+func StreamNew(stream_name string) stream {
+	return stream{}.New(stream_name)
 }
 
-func Stream_xRevRange(stream_key string) ([]redis.XMessage, error) {
-	return goredis.XRevRange(context.Background(), app_conf.Project+":"+stream_key, "-", "+").Result()
+func (self Stream) New(stream_name string) stream {
+	self.StreamChannelName = app_conf.Project + ":" + stream_name
+	//self.Producer = make(chan any)
+	//self.Consumer = make(chan any)
+	return stream{self}
 }
 
-func Stream_xRead(stream_key string) ([]redis.XStream, error) {
+func (self stream) Publish(value map[string]any) (string, error) {
+	return goredis.XAdd(context.Background(), &redis.XAddArgs{
+		Stream: self.StreamChannelName,
+		Values: value,
+	}).Result()
+}
+
+func (self stream) XLength() (int64, error) {
+	return goredis.XLen(context.Background(), self.StreamChannelName).Result()
+}
+
+func (self stream) XRange() ([]redis.XMessage, error) {
+	return goredis.XRange(context.Background(), self.StreamChannelName, "-", "+").Result()
+}
+
+func (self stream) XRevRange() ([]redis.XMessage, error) {
+	return goredis.XRevRange(context.Background(), self.StreamChannelName, "-", "+").Result()
+}
+
+func (self stream) XRead() ([]redis.XStream, error) {
 	var xr redis.XReadArgs
 	return goredis.XRead(context.Background(), &xr).Result()
+}
+
+func (self stream) XGroupCreateConsumer(group, consumer string) error {
+	return goredis.XGroupCreateConsumer(context.Background(), self.StreamChannelName, group, consumer).Err()
+}
+
+func (self stream) XReadGroup() ([]redis.XStream, error) {
+	return goredis.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+		Group:    self.Group,
+		Consumer: self.Consumer,
+		Streams:  []string{self.StreamChannelName},
+		Count:    1,
+		Block:    0,
+		NoAck:    false,
+	}).Result()
 }
