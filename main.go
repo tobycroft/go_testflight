@@ -1,8 +1,14 @@
 package main
 
-import "main.go/tuuz/Redis"
+import (
+	"fmt"
+	"main.go/tuuz/Jsong"
+	"main.go/tuuz/Redis"
+)
 
 func main() {
 	var rs Redis.Stream
-	rs.New("knet").XGroupCreateConsumer("group1", "com1")
+	a, b := rs.New("knet").XInfoGroups()
+	fmt.Println(Jsong.Encode(a))
+	fmt.Println(b)
 }

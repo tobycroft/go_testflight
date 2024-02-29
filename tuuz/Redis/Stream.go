@@ -17,6 +17,9 @@ type Stream struct {
 type stream struct {
 	Stream
 }
+type group struct {
+	stream
+}
 
 func StreamNew(stream_name string) stream {
 	return stream{}.New(stream_name)
@@ -53,11 +56,49 @@ func (self stream) XRead() ([]redis.XStream, error) {
 	return goredis.XRead(context.Background(), &xr).Result()
 }
 
-func (self stream) XGroupCreateConsumer(group, consumer string) error {
-	return goredis.XGroupCreateConsumer(context.Background(), self.StreamChannelName, group, consumer).Err()
+func (self stream) XGroupCreate(group string, start string) error {
+	self.Group = group
+	gps, err := self.XInfoGroups()
+	if err != nil {
+		return err
+	}
+	for _, gp := range gps {
+		if gp.Name == group {
+			return nil
+		}
+	}
+	return goredis.XGroupCreateMkStream(context.Background(), self.StreamChannelName, group, start).Err()
 }
 
-func (self stream) XReadGroup() ([]redis.XStream, error) {
+func (self stream) XGroupCreateConsumer(Consumer string) error {
+	self.Consumer = Consumer
+	coms, err := self.XInfoConsumers(self.Group)
+	if err != nil {
+		return err
+	}
+	for _, com := range coms {
+		if com.Name == Consumer {
+			return nil
+		}
+	}
+	return goredis.XGroupCreateConsumer(context.Background(), self.StreamChannelName, self.Group, Consumer).Err()
+}
+
+func (self stream) XDelete() error {
+	return goredis.XGroupDestroy(context.Background(), self.StreamChannelName, self.Group).Err()
+}
+func (self stream) XInfoGroups() ([]redis.XInfoGroup, error) {
+	return goredis.XInfoGroups(context.Background(), self.StreamChannelName).Result()
+}
+
+func (self stream) XInfoConsumers(group string) ([]redis.XInfoConsumer, error) {
+	self.Group = group
+	return goredis.XInfoConsumers(context.Background(), self.StreamChannelName, self.Group).Result()
+}
+
+func (self stream) XReadGroup(Group, Consumer string) ([]redis.XStream, error) {
+	self.Group = Group
+	self.Consumer = Consumer
 	return goredis.XReadGroup(context.Background(), &redis.XReadGroupArgs{
 		Group:    self.Group,
 		Consumer: self.Consumer,
