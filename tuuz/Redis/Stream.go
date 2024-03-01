@@ -12,6 +12,7 @@ type Stream struct {
 	//Consumer          chan any
 	Group    string
 	Consumer string
+	MaxLen   int64
 }
 
 type stream struct {
@@ -23,15 +24,22 @@ type group struct {
 
 func (self *Stream) New(stream_name string) *stream {
 	self.StreamChannelName = app_conf.Project + ":" + stream_name
+	self.MaxLen = 10000
 	//self.Producer = make(chan any)
 	//self.Consumer = make(chan any)
 	return &stream{self}
+}
+
+func (self *stream) SetMaxLen(MaxLen int64) *stream {
+	self.MaxLen = MaxLen
+	return self
 }
 
 func (self *stream) Publish(value map[string]any) (string, error) {
 	return goredis.XAdd(context.Background(), &redis.XAddArgs{
 		Stream: self.StreamChannelName,
 		Values: value,
+		MaxLen: self.MaxLen,
 	}).Result()
 }
 
@@ -55,12 +63,11 @@ func (self *stream) XRead() ([]redis.XStream, error) {
 func (self *stream) XGroupCreate(group string, start string) error {
 	self.Group = group
 	gps, err := self.XInfoGroups()
-	if err != nil {
-		return err
-	}
-	for _, gp := range gps {
-		if gp.Name == group {
-			return nil
+	if err == nil {
+		for _, gp := range gps {
+			if gp.Name == group {
+				return nil
+			}
 		}
 	}
 	return goredis.XGroupCreateMkStream(context.Background(), self.StreamChannelName, self.Group, start).Err()
@@ -92,15 +99,41 @@ func (self *stream) XInfoConsumers(group string) ([]redis.XInfoConsumer, error) 
 	return goredis.XInfoConsumers(context.Background(), self.StreamChannelName, self.Group).Result()
 }
 
-func (self *stream) XReadGroup() ([]redis.XStream, error) {
-	//self.Group = Group
-	//self.Consumer = Consumer
-	return goredis.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+func (self *stream) XReadGroup() (redis.XStream, error) {
+	data, err := goredis.XReadGroup(context.Background(), &redis.XReadGroupArgs{
 		Group:    self.Group,
 		Consumer: self.Consumer,
-		Streams:  []string{self.StreamChannelName},
+		Streams:  []string{self.StreamChannelName, ">"},
 		Count:    1,
 		Block:    0,
 		NoAck:    false,
 	}).Result()
+	if err != nil {
+		return redis.XStream{}, err
+	}
+	return data[0], err
+}
+
+func (self *stream) XReadGroupMore(count int64) ([]redis.XStream, error) {
+	return goredis.XReadGroup(context.Background(), &redis.XReadGroupArgs{
+		Group:    self.Group,
+		Consumer: self.Consumer,
+		Streams:  []string{self.StreamChannelName, ">"},
+		Count:    count,
+		Block:    0,
+		NoAck:    false,
+	}).Result()
+}
+
+func (self *stream) XPending() (*redis.XPending, error) {
+	return goredis.XPending(context.Background(), self.StreamChannelName, self.Group).Result()
+}
+
+func (self *stream) XTrim(MaxLen int64) error {
+	self.MaxLen = MaxLen
+	return goredis.XTrimMaxLen(context.Background(), self.StreamChannelName, self.MaxLen).Err()
+}
+
+func (self *stream) XAck(ids ...string) error {
+	return goredis.XAck(context.Background(), self.StreamChannelName, self.Group, ids...).Err()
 }
