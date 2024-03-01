@@ -87,9 +87,14 @@ func (self *stream) XGroupCreateConsumer(Consumer string) error {
 	return goredis.XGroupCreateConsumer(context.Background(), self.StreamChannelName, self.Group, Consumer).Err()
 }
 
-func (self *stream) XDelete() error {
+func (self *stream) XGroupDestroy() error {
 	return goredis.XGroupDestroy(context.Background(), self.StreamChannelName, self.Group).Err()
 }
+
+func (self *stream) XGroupDelConsumer() error {
+	return goredis.XGroupDelConsumer(context.Background(), self.StreamChannelName, self.Group, self.Consumer).Err()
+}
+
 func (self *stream) XInfoGroups() ([]redis.XInfoGroup, error) {
 	return goredis.XInfoGroups(context.Background(), self.StreamChannelName).Result()
 }
@@ -136,4 +141,8 @@ func (self *stream) XTrim(MaxLen int64) error {
 
 func (self *stream) XAck(ids ...string) error {
 	return goredis.XAck(context.Background(), self.StreamChannelName, self.Group, ids...).Err()
+}
+
+func (self *stream) XDel(ids ...string) error {
+	return goredis.XDel(context.Background(), self.StreamChannelName, ids...).Err()
 }
