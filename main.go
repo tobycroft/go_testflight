@@ -12,10 +12,10 @@ func main() {
 	fmt.Println(group.XInfoGroups())
 	fmt.Println(group.XGroupCreate("group3", "0"))
 	fmt.Println(group.XGroupCreateConsumer("com1"))
+	fmt.Println(group.XAutoClaimAll(10))
 
-	fmt.Println(group.XReadGroup())
-	fmt.Println(group.XDelete())
 	fmt.Println(group.XPending())
+	fmt.Println(group.XReadGroup())
 	time.Sleep(1 * time.Second)
 
 }
